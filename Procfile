@@ -1,4 +1,1 @@
-web : npm start
-
-
-ESTO ES PARA DEPLOYAR EN HEROKU CLI
+web: node index.js
