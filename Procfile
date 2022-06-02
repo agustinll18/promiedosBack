@@ -1,0 +1,4 @@
+web : npm start
+
+
+ESTO ES PARA DEPLOYAR EN HEROKU CLI
