@@ -1,6 +1,17 @@
 const express = require("express");
 const middelware = require("./components/middleware");
 const cors = require("cors");   /* ESTO HACE QUE NUESTRA API PUEDA COMPARTIR SUS RECURSOS CON OTROS DOMINIO  */
+/* MONGOOSE */
+/* const mongoose = require("mongoose")
+
+const linkConnect = "mongodb+srv://agusll18:Headtenis1@cluster0.w1y4a.mongodb.net/test"
+
+mongoose.connect(linkConnect)
+then( () =>{ 
+console. log (' Database connected ')
+}).catch(err =>{
+console.error(err) 
+})  */
 /* CORS = CROSS ORIGIN RESOURCE SHARING */
 const app = express()
 /* CORS */
@@ -24,12 +35,12 @@ let productos = [
     precio: 59000,
     id: 1,
     pic: "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/338/510/products/raqueta-babolat-pure-aero-rafa-2-bff1f4ef7c1210fb3b16334515103466-240-0.png",
-    peso: "300 g",
-    aro: "100 in²",
+    peso: 300,
+    aro: 100 ,
     patronEncordado: "16/19",
     grip: "4 3/4 4 1/4",
-    balance: "320 mm",
-    largo: "685 mm",
+    balance: 320,
+    largo: 685 ,
   },
   {
     modelo: "Babolat Pure Drive ",
@@ -39,12 +50,12 @@ let productos = [
     precio: 52000,
     id: 2,
     pic: "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/338/510/products/pure-drive-encordada-21-358f17888d656be79c16341391022033-240-0.png",
-    peso: "300 g",
-    aro: "100 in²",
+    peso: 300,
+    aro: 100 ,
     patronEncordado: "16/19",
     grip: "4 3/4 4 1/4",
-    balance: "320 mm",
-    largo: "685 mm",
+    balance: 320 ,
+    largo: 685,
   },
   {
     modelo: "Babolat Pure Strike 100 ",
@@ -54,12 +65,12 @@ let productos = [
     precio: 51000,
     id: 3,
     pic: "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/338/510/products/babolat-pure_strike_100-11-7434b6518bd529d73016357184390406-480-0.png",
-    peso: "295 g",
-    aro: "100 in²",
+    peso: 295 ,
+    aro: 100 ,
     patronEncordado: "16/19",
     grip: "4 3/4 4 1/4",
-    balance: "320 mm",
-    largo: "685 mm",
+    balance: 320 ,
+    largo: 685 ,
   },
   {
     modelo: "HEAD Speed PRO ",
@@ -69,12 +80,12 @@ let productos = [
     precio: 54000,
     id: 4,
     pic: "https://cdn-mdb.head.com/CDN3/G/233602/1/400x400/speed-pro-2022.jpg",
-    peso: "310 g",
-    aro: " 100 in²",
+    peso: 310 ,
+    aro: 100,
     patronEncordado: "18/20",
     grip: "4 1/4",
-    balance: "315mm",
-    largo: "685mm",
+    balance: 315,
+    largo: 685,
   },
   {
     modelo: "HEAD Prestige PRO",
@@ -84,12 +95,12 @@ let productos = [
     precio: 51500,
     id: 5,
     pic: "https://cdn-mdb.head.com/CDN3/G/236101/1/400x400/prestige-pro-2021.jpg",
-    peso: "320 g",
-    aro: " 98 in²",
+    peso: 320,
+    aro: 98 ,
     patronEncordado: "18/20",
     grip: "4 3/4",
-    balance: "310mm",
-    largo: "685mm",
+    balance:310,
+    largo: 685,
   },
   {
     modelo: "HEAD Radical PRO",
@@ -99,12 +110,12 @@ let productos = [
     precio: 53000,
     id: 6,
     pic: "https://cdn-mdb.head.com/CDN3/G/234101/1/400x400/radical-pro.jpg",
-    peso: "315 g",
-    aro: "98 in²",
+    peso:315,
+    aro: 98 ,
     patronEncordado: "16/19",
     grip: "4 3/4",
-    balance: "315 mm",
-    largo: "685 mm",
+    balance:315,
+    largo: 685 ,
   },
   {
     modelo: "Wilson CLASH 98 V2",
@@ -114,12 +125,12 @@ let productos = [
     precio: 58000,
     id: 7,
     pic: "https://wilsonstore.com.ar/media/catalog/product/cache/70463b1ff005ad550922e9aee1aaa0df/w/r/wr074510u_1_clash_108_v2_rd_bl-1200x1200_2_1.jpeg",
-    peso: "310 g",
-    aro: "98 in²",
+    peso: 310 ,
+    aro: 98 ,
     patronEncordado: "16/19",
     grip: "4 3/4",
-    balance: "",
-    largo: "685 mm",
+    balance:310 ,
+    largo: 685,
   },
   {
     modelo: "Wilson Pro Staff 97ULS",
@@ -129,12 +140,12 @@ let productos = [
     precio: 57000,
     id: 8,
     pic: "https://wilsonstore.com.ar/media/catalog/product/cache/70463b1ff005ad550922e9aee1aaa0df/w/r/wrt73181u_5.jpg",
-    peso: "270 g",
-    aro: "97 in²",
+    peso: 270,
+    aro: 97,
     patronEncordado: "18/16",
     grip: "4 3/4",
-    balance: "325 mm",
-    largo: "685 mm",
+    balance:325,
+    largo: 685,
   },
   {
     modelo: "Wilson Blade 104 V8.0",
@@ -144,12 +155,12 @@ let productos = [
     precio: 50500,
     id: 9,
     pic: "https://wilsonstore.com.ar/media/catalog/product/cache/70463b1ff005ad550922e9aee1aaa0df/w/r/wr079111u_1_blade_104_v8_iridescent-1200x1200_2.jpeg",
-    peso: "290 g",
-    aro: "104 in²",
+    peso: 290 ,
+    aro: 104 ,
     patronEncordado: "18/20",
     grip: "4 3/4",
-    balance: "",
-    largo: "698 mm",
+    balance: 290,
+    largo: 690,
   },
 ]
 app.get("/", (req, res) => {

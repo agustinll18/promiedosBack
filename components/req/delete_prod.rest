@@ -1,1 +1,1 @@
-DELETE http://localhost:3001/productos/2
+DELETE https://polar-basin-25728.herokuapp.com/productos/4
