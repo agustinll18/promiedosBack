@@ -1,6 +1,8 @@
+require("./mongodb")
 const express = require("express");
 const middelware = require("./components/middleware");
 const cors = require("cors");   /* ESTO HACE QUE NUESTRA API PUEDA COMPARTIR SUS RECURSOS CON OTROS DOMINIO  */
+const Prod= require("./models/Products")
 /* MONGOOSE */
 /* const mongoose = require("mongoose")
 
@@ -27,7 +29,68 @@ app.listen(PORT, () => {
 })
 
 let productos = [
-  {
+  
+]
+app.get("/", (req, res) => {
+  /* FIJARSE EL CONTENT TYPE EN GOOGLE */
+  res.send("<h1>Hola desde Match Point</h1>")
+})
+app.get("/productos", (req, res) => {
+  /* FIJARSE EL CONTENT TYPE EN GOOGLE */
+  Prod.find({}).then(productos => {res.json(productos)})
+  
+})
+
+app.get("/productos/:id", (req, res) => {
+  const id = Number(req.params.id)
+  const producto = productos.find((producto) => producto.id == id)/*  ESTO HACE QUE SI LA ID QUE SE ESCRIBIO EN LA URL EXISTE EN EL ARRAY DE PRODUCTOS MUESTRE EL CORRECTO */
+  if (producto) {
+    res.json(producto)
+  } else {/*  Y EN CASO DE QUE NO CATCHEA ESE ERROR Y RESUELVE CON UN STATUS 404  */
+    res.status(404).json({
+      error:"Este producto no existe"
+    })
+  }
+})
+
+app.delete("/productos/:id", (req, res) => {
+  const id = Number(req.params.id)
+  productos = productos.filter((producto) => producto.id !== id)
+  res.status(204).end()
+  console.log("Producto deleted")
+})
+
+app.post("/productos", (req, res) => {
+  const producto = req.body
+
+  const ids = productos.map((producto) => producto.id)
+  const maxId = Math.max(...ids)
+
+  const newProducto = {
+    id: maxId + 1,
+    modelo: producto.modelo,
+    descripcion: producto.descripcion,
+    stock: producto.stock,
+    precio: producto.precio,
+    pic: producto.pic,
+    peso: producto.peso,
+    aro: producto.aro,
+    patronEncordado: producto.patronEncordado,
+    balance: producto.balance,
+    grip: producto.grip,
+    largo: producto.largo,
+  }
+
+  productos = productos.concat(newProducto)
+  res.json(newProducto)
+});
+/* ESTO SI O SI DEBE IR AL FINAL DE LAS RUTAS YA QUE SE USARIA PARA EL ERROR 404 Y COMO EL 1ER APP.USE RECORRE LOS DEMAS APP. DE ARRIBA HACIA ABAJO   */
+app.use((requ,res)=>{
+  res.status(404).json( {
+    error:404
+  })
+})
+/* {
     modelo: "Babolat Pure Aero Rafa",
     descripcion:
       "Combatividad, resistencia, fortaleza mental... ¡eres como Rafa! Es hora de desafiar a tus oponentes más duros con esta Pure Aero, que con su nombre y colores acompañará tu dominio del juego a través de tu liftado y tu potencia.",
@@ -161,63 +224,4 @@ let productos = [
     grip: "4 3/4",
     balance: 290,
     largo: 690,
-  },
-]
-app.get("/", (req, res) => {
-  /* FIJARSE EL CONTENT TYPE EN GOOGLE */
-  res.send("<h1>Hola desde Match Point</h1>")
-})
-app.get("/productos", (req, res) => {
-  /* FIJARSE EL CONTENT TYPE EN GOOGLE */
-  res.json(productos)
-})
-
-app.get("/productos/:id", (req, res) => {
-  const id = Number(req.params.id)
-  const producto = productos.find((producto) => producto.id == id)/*  ESTO HACE QUE SI LA ID QUE SE ESCRIBIO EN LA URL EXISTE EN EL ARRAY DE PRODUCTOS MUESTRE EL CORRECTO */
-  if (producto) {
-    res.json(producto)
-  } else {/*  Y EN CASO DE QUE NO CATCHEA ESE ERROR Y RESUELVE CON UN STATUS 404  */
-    res.status(404).json({
-      error:"Este producto no existe"
-    })
-  }
-})
-
-app.delete("/productos/:id", (req, res) => {
-  const id = Number(req.params.id)
-  productos = productos.filter((producto) => producto.id !== id)
-  res.status(204).end()
-  console.log("Producto deleted")
-})
-
-app.post("/productos", (req, res) => {
-  const producto = req.body
-
-  const ids = productos.map((producto) => producto.id)
-  const maxId = Math.max(...ids)
-
-  const newProducto = {
-    id: maxId + 1,
-    modelo: producto.modelo,
-    descripcion: producto.descripcion,
-    stock: producto.stock,
-    precio: producto.precio,
-    pic: producto.pic,
-    peso: producto.peso,
-    aro: producto.aro,
-    patronEncordado: producto.patronEncordado,
-    balance: producto.balance,
-    grip: producto.grip,
-    largo: producto.largo,
-  }
-
-  productos = productos.concat(newProducto)
-  res.json(newProducto)
-});
-/* ESTO SI O SI DEBE IR AL FINAL DE LAS RUTAS YA QUE SE USARIA PARA EL ERROR 404 Y COMO EL 1ER APP.USE RECORRE LOS DEMAS APP. DE ARRIBA HACIA ABAJO   */
-app.use((requ,res)=>{
-  res.status(404).json( {
-    error:404
-  })
-})
+  }, */

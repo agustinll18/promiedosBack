@@ -14,7 +14,7 @@ mongoose
   .catch((err) => {
     console.error(err);
   });
-
+/* 
 const newSchema = new Schema({
   modelo: String,
   descripcion: String,
@@ -28,7 +28,7 @@ const newSchema = new Schema({
   balance: Number,
   largo: Number,
 });
-const postsProd = model("Product", newSchema);
+const postsProd = model("Product", newSchema); */
 
 
 /* ESTO ES PARA AGREGAR UN PRODUCTO */
@@ -50,7 +50,6 @@ const postsProd = model("Product", newSchema);
 
 /* ESTO ES PARA GUARDAR UN PRODUCTO EN MONGO */
 
-
 /* product
   .save()
   .then((res) => {
@@ -61,12 +60,11 @@ const postsProd = model("Product", newSchema);
     console.error(err);
   }); */
 
-  
 /* ESTO ES PARA BUSCAR PRODUCTOS EN LA BASE */
-
+/*
 postsProd     
-  .find({})/* ACA SE COLOCA EL VALOR QUE QUERES BUSCAR PARA HALLAR EL PRODUCTO, SINO TIENE NINGUN VALOR VA A RETORNAR TODOS LOS OBJETOS DE ESA COLECCION   */
+  .find({}) ACA SE COLOCA EL VALOR QUE QUERES BUSCAR PARA HALLAR EL PRODUCTO, SINO TIENE NINGUN VALOR VA A RETORNAR TODOS LOS OBJETOS DE ESA COLECCION  
 
   .then((res) => {
     console.log(res);
-  });
+  }); */
