@@ -12,12 +12,12 @@ const newSchema = new Schema({
   balance: Number,
   largo: Number,
 });
-newSchema.set("toJSON", {
+/* newSchema.set("toJSON", {
   transform: (docunent, resProducto) => {
     resProducto.id = resProducto._id;
     delete resProducto._id;
     delete resProducto.__v;
   },
-});
+}); */
 const Prod = model("Product", newSchema);
 module.exports = Prod;

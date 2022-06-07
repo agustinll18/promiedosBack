@@ -3,17 +3,7 @@ const express = require("express");
 const middelware = require("./components/middleware");
 const cors = require("cors");   /* ESTO HACE QUE NUESTRA API PUEDA COMPARTIR SUS RECURSOS CON OTROS DOMINIO  */
 const Prod= require("./models/Products")
-/* MONGOOSE */
-/* const mongoose = require("mongoose")
 
-const linkConnect = "mongodb+srv://agusll18:Headtenis1@cluster0.w1y4a.mongodb.net/test"
-
-mongoose.connect(linkConnect)
-then( () =>{ 
-console. log (' Database connected ')
-}).catch(err =>{
-console.error(err) 
-})  */
 /* CORS = CROSS ORIGIN RESOURCE SHARING */
 const app = express()
 /* CORS */

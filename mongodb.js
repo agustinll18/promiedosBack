@@ -1,7 +1,5 @@
 /* MONGOOSE */
 const mongoose = require("mongoose");
-/* SCHEMA */
-const { model, Schema } = mongoose;
 
 const linkConnect =
   "mongodb+srv://agusll18:Headtenis1@cluster0.w1y4a.mongodb.net/apiMP"; /* en la ultima parte de la url crea la coleccion a la cual va a guardar los datos  */
@@ -14,21 +12,6 @@ mongoose
   .catch((err) => {
     console.error(err);
   });
-/* 
-const newSchema = new Schema({
-  modelo: String,
-  descripcion: String,
-  stock: Number,
-  precio: Number,
-  pic: String,
-  peso: Number,
-  aro: Number,
-  patronEncordado: String,
-  grip: String,
-  balance: Number,
-  largo: Number,
-});
-const postsProd = model("Product", newSchema); */
 
 
 /* ESTO ES PARA AGREGAR UN PRODUCTO */
