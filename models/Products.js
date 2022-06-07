@@ -12,9 +12,6 @@ const newSchema = new Schema({
   balance: Number,
   largo: Number,
 });
-const Prod = model("Product", newSchema);
-module.exports = Prod;
-
 newSchema.set("toJSON", {
   transform: (docunent, resProducto) => {
     resProducto.id = resProducto._id;
@@ -22,3 +19,5 @@ newSchema.set("toJSON", {
     delete resProducto.__v;
   },
 });
+const Prod = model("Product", newSchema);
+module.exports = Prod;

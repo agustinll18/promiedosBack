@@ -38,7 +38,6 @@ app.get("/", (req, res) => {
 app.get("/productos", (req, res) => {
   /* FIJARSE EL CONTENT TYPE EN GOOGLE */
   Prod.find({}).then(productos => {res.json(productos)})
-  
 })
 
 app.get("/productos/:id", (req, res) => {
