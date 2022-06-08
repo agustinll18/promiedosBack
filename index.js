@@ -18,9 +18,7 @@ app.listen(PORT, () => {
   console.log(`listening on port: ${PORT}`)
 })
 
-let productos = [
-  
-]
+let productos = []
 app.get("/", (req, res) => {
   /* FIJARSE EL CONTENT TYPE EN GOOGLE */
   res.send("<h1>Hola desde Match Point</h1>")
@@ -31,17 +29,22 @@ app.get("/productos", (req, res) => {
 })
 
 app.get("/productos/:id", (req, res) => {
-  const id = Number(req.params.id)
-  const producto = productos.find((producto) => producto.id == id)/*  ESTO HACE QUE SI LA ID QUE SE ESCRIBIO EN LA URL EXISTE EN EL ARRAY DE PRODUCTOS MUESTRE EL CORRECTO */
-  if (producto) {
+  const id = String(req.params.id)
+  /* NORMAL SIN MONGOOSE */
+  
+  /*const producto = productos.find((producto) => producto.id == id)  ESTO HACE QUE SI LA ID QUE SE ESCRIBIO EN LA URL EXISTE EN EL ARRAY DE PRODUCTOS MUESTRE EL CORRECTO */
+  /*if (producto) {
     res.json(producto)
-  } else {/*  Y EN CASO DE QUE NO CATCHEA ESE ERROR Y RESUELVE CON UN STATUS 404  */
+  } else {  Y EN CASO DE QUE NO CATCHEA ESE ERROR Y RESUELVE CON UN STATUS 404  
     res.status(404).json({
       error:"Este producto no existe"
     })
-  }
+  }*/
+const producto = productos.find((producto) => producto._id == id)
+  /* CON MONGOOSE */
+  Prod.find({_id:`${producto}`}).then( producto => { res.json(producto)}
+    /* ESTO HACE QUE SI LA ID QUE SE ESCRIBIO EN LA URL EXISTE EN EL ARRAY DE PRODUCTOS MUESTRE EL CORRECTO */ )
 })
-
 app.delete("/productos/:id", (req, res) => {
   const id = Number(req.params.id)
   productos = productos.filter((producto) => producto.id !== id)

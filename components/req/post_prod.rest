@@ -6,12 +6,12 @@ Content-Type: application/json
 	"stock": 75,
 	"precio": 1000,
 	"pic": "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/338/510/products/raqueta-babolat-pure-aero-rafa-2-bff1f4ef7c1210fb3b16334515103466-240-0.png",
-	"peso": "300 g",
-	"aro": "100 in²",
+	"peso":300,
+	"aro":100 ,
 	"patronEncordado": "16/19",
 	"grip": "4 3/4 4 1/4",
-	"balance": "320 mm",
-	"largo": "685 mm"
+	"balance":320 ,
+	"largo":685 
 }
 
 NO SE PORQUE PERO FUNCIONA EN INSOMNIA PERO NO ACA
