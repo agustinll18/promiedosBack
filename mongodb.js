@@ -7,10 +7,12 @@ const linkConnect =
 mongoose
   .connect(linkConnect) /* devuelve una promesa */
   .then(() => {
-    console.log(" Database connected ");
+    console.log(" Database connected ");/* 
+    mongoose.connection.close(); */
   })
   .catch((err) => {
-    console.error(err);
+    console.error(err);/* 
+    mongoose.connection.close(); */
   });
 
 

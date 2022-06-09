@@ -25,7 +25,11 @@ app.get("/", (req, res) => {
 })
 app.get("/productos", (req, res) => {
   /* FIJARSE EL CONTENT TYPE EN GOOGLE */
-  Prod.find({}).then(productos => {res.json(productos)})
+  Prod.find({}).then(
+    productos => {
+      res.json(productos)/* 
+      mongoose.connection.close(); */
+    })
 })
 
 app.get("/productos/:id", (req, res) => {
@@ -43,7 +47,10 @@ app.get("/productos/:id", (req, res) => {
 
 
   /* CON MONGOOSE */
-  Prod.find({_id:`${id}`}).then( producto => { res.json(producto)})
+  Prod.find({_id:`${id}`}).then( 
+    producto => { res.json(producto)/* 
+    mongoose.connection.close(); */
+    })
     /* ESTO HACE QUE SI LA ID QUE SE ESCRIBIO EN LA URL EXISTE EN EL ARRAY DE PRODUCTOS MUESTRE EL CORRECTO */ 
 })
 app.delete("/productos/:id", (req, res) => {
