@@ -17,13 +17,13 @@ const newSchema = new Schema({
 const Prod = model("product", newSchema);
 
 
-newSchema.set('toJSON', {
+/* newSchema.set('toJSON', {
   transform: (docunent, resProducto) => {
     resProducto.id = resProducto._id;
     delete resProducto._id;
     delete resProducto.__v;
   },
-});
+}); */
 /* ESTO ES PARA GUARDAR UN PRODUCTO EN MONGO */
 /* const product = new Prod({
   modelo: "Babolat Pure Aero Rafa",
