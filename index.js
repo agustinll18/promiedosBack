@@ -31,19 +31,20 @@ app.get("/productos", (req, res) => {
 app.get("/productos/:id", (req, res) => {
   const id = String(req.params.id)
   /* NORMAL SIN MONGOOSE */
-  
-  /*const producto = productos.find((producto) => producto.id == id)  ESTO HACE QUE SI LA ID QUE SE ESCRIBIO EN LA URL EXISTE EN EL ARRAY DE PRODUCTOS MUESTRE EL CORRECTO */
-  /*if (producto) {
-    res.json(producto)
-  } else {  Y EN CASO DE QUE NO CATCHEA ESE ERROR Y RESUELVE CON UN STATUS 404  
+  /* 
+  const producto = productos.find((producto) => producto.id == id)  ESTO HACE QUE SI LA ID QUE SE ESCRIBIO EN LA URL EXISTE EN EL ARRAY DE PRODUCTOS MUESTRE EL CORRECTO 
+  if (producto) {
+    res.json(producto)*/
+  /*} else {   Y EN CASO DE QUE NO CATCHEA ESE ERROR Y RESUELVE CON UN STATUS 404 
     res.status(404).json({
       error:"Este producto no existe"
     })
-  }*/
-const producto = productos.find((producto) => producto._id == id)
+  }*/ 
+
+
   /* CON MONGOOSE */
-  Prod.find({_id:`${producto}`}).then( producto => { res.json(producto)}
-    /* ESTO HACE QUE SI LA ID QUE SE ESCRIBIO EN LA URL EXISTE EN EL ARRAY DE PRODUCTOS MUESTRE EL CORRECTO */ )
+  Prod.find({_id:`${id}`}).then( producto => { res.json(producto)})
+    /* ESTO HACE QUE SI LA ID QUE SE ESCRIBIO EN LA URL EXISTE EN EL ARRAY DE PRODUCTOS MUESTRE EL CORRECTO */ 
 })
 app.delete("/productos/:id", (req, res) => {
   const id = Number(req.params.id)
@@ -53,6 +54,7 @@ app.delete("/productos/:id", (req, res) => {
 })
 
 app.post("/productos", (req, res) => {
+  /* PUSH SIN MONGOOSE */
   const producto = req.body
 
   const ids = productos.map((producto) => producto.id)
@@ -82,7 +84,11 @@ app.use((requ,res)=>{
     error:404
   })
 })
+
+/* ANTIGUO ARRAY DE PRODUCTOS */
+
 /* {
+
     modelo: "Babolat Pure Aero Rafa",
     descripcion:
       "Combatividad, resistencia, fortaleza mental... ¡eres como Rafa! Es hora de desafiar a tus oponentes más duros con esta Pure Aero, que con su nombre y colores acompañará tu dominio del juego a través de tu liftado y tu potencia.",
