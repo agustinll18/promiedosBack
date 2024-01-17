@@ -1,29 +1,36 @@
 const { model, Schema } = require("mongoose");
-const mongoose = require("mongoose");/* ESTO ES PARA CERRAR LA CONEXION CON EL SERVER Y MEJORAR EL RENDIMIENTO Y USO DE LA MEMORIA DEL SERVER */
+
 const newSchema = new Schema({
-  modelo: String,
-  descripcion: String,
-  stock: Number,
-  precio: Number,
-  pic: String,
-  peso: Number,
-  aro: Number,
-  patronEncordado: String,
-  grip: String,
-  balance: Number,
-  largo: Number,
+  content: String,
+  username: String,
+  date: { type: Date, default: Date.now },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
+  likes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 
-const Prod = model("product", newSchema);
-
-
-newSchema.set('toJSON', {
-  transform: (docunent, resProducto) => {
+newSchema.set("toJSON", {
+  transform: (document, resProducto) => {
     resProducto.id = resProducto._id;
     delete resProducto._id;
     delete resProducto.__v;
   },
 });
+
+const Posts = model("Post", newSchema);
+
+module.exports = Posts;
+
+
+
+
 /* ESTO ES PARA GUARDAR UN PRODUCTO EN MONGO */
 /* const product = new Prod({
   modelo: "Babolat Pure Aero Rafa",
@@ -49,5 +56,3 @@ newSchema.set('toJSON', {
   .catch((err) => {
     console.error(err);
   }); */
-
-module.exports = Prod;
