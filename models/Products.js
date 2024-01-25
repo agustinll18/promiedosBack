@@ -1,19 +1,15 @@
 const { model, Schema } = require("mongoose");
 
+const likeSchema = new Schema({
+  username: String,
+  date: { type: Date, default: Date.now },
+}, { _id: false });
+
 const newSchema = new Schema({
   content: String,
   username: String,
   date: { type: Date, default: Date.now },
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-  },
-  likes: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
+  likes: [likeSchema], // Cambiado a un array de objetos
 });
 
 newSchema.set("toJSON", {
@@ -27,6 +23,7 @@ newSchema.set("toJSON", {
 const Posts = model("Post", newSchema);
 
 module.exports = Posts;
+
 
 
 

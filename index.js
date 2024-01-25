@@ -56,7 +56,10 @@ const bodyParser = require('body-parser'); */
 });
 
 app.use(bodyParser.json()); */
-
+app.get("/", (req, res) => {
+  /* FIJARSE EL CONTENT TYPE EN GOOGLE */
+  res.send("<h1>Hola desde API PROMIEDOS</h1>");
+});
 // Ruta para crear un nuevo usuario
 app.post("/api/register", async (req, res) => {
   const { username, password } = req.body;
@@ -71,16 +74,52 @@ app.post("/api/register", async (req, res) => {
   }
 });
 
-app.get("/", (req, res) => {
-  /* FIJARSE EL CONTENT TYPE EN GOOGLE */
-  res.send("<h1>Hola desde API PROMIEDOS</h1>");
-});
 app.get("/api/posts", (req, res) => {
   /* FIJARSE EL CONTENT TYPE EN GOOGLE */
   Posts.find({}).then((productos) => {
     res.json(productos); /* 
       mongoose.connection.close(); */
   });
+});
+app.put("/api/posts/:id/like", async (req, res, next) => {
+  try {
+    const { username } = req.body;
+    const postId = req.params.id;
+
+    console.log("Received PUT request to like/unlike post with ID:", postId);
+    console.log("Username:", username);
+
+    // Busca el post por ID
+    const post = await Posts.findById(postId);
+
+    if (!post) {
+      console.log("Post not found", post);
+      return res.status(404).json({
+        error: "Post not found",
+      });
+    }
+
+    // Verifica si el usuario ya le dio like al post
+    const userLiked = post.likes.some((like) => like.username === username);
+
+    if (userLiked) {
+      // Si ya le dio like, quitar el like
+      post.likes = post.likes.filter((like) => like.username !== username);
+    } else {
+      // Si no le dio like, agregar el like
+      post.likes.push({ username, date: new Date() });
+    }
+
+    // Guarda el post actualizado en la base de datos
+    const updatedPost = await post.save();
+
+    // Envía la respuesta con el post actualizado
+    res.json(updatedPost);
+  } catch (error) {
+    console.error("Error handling like/unlike:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+    next(error);
+  }
 });
 
 app.get("/api/posts/:id", (req, res, next) => {
@@ -115,7 +154,6 @@ app.get("/api/posts/:id", (req, res, next) => {
 });
 /* ESTO HACE QUE SI LA ID QUE SE ESCRIBIO EN LA URL EXISTE EN EL ARRAY DE PRODUCTOS MUESTRE EL CORRECTO */
 
-
 // Eliminar un usuario y sus posteos asociados
 app.delete("/api/users/:id", async (req, res, next) => {
   try {
@@ -136,43 +174,6 @@ app.delete("/api/users/:id", async (req, res, next) => {
     next(error);
   }
 });
-
-app.post("/api/posts", async (req, res, next) => {
-  try {
-    const { username, content, likes } = req.body;
-
-    // Verifica que el usuario exista
-    const user = await User.findOne({ username });
-
-    if (!user) {
-      return res.status(404).json({
-        error: 'Usuario no encontrado',
-      });
-    }
-
-    if (!content) {
-      return res.status(400).json({
-        error: 'Falta el "contenido" para realizar el post',
-      });
-    }
-
-    const product = new Posts({
-      content,
-      date: new Date(),
-      likes, // Puedes ajustar el formato del dato según tus necesidades
-      userId: user._id,
-      username: user.username,
-    });
-
-    const guardarNota = await product.save();
-    user.posts = user.posts.concat(guardarNota._id);
-    await user.save();
-    res.json(guardarNota);
-  } catch (error) {
-    next(error);
-  }
-});
-
 
 app.delete("/api/posts/:id", (req, res, next) => {
   /* SIN MONGOOSE */
@@ -204,14 +205,14 @@ app.put("/api/posts/:id", (req, res) => {
 });
 app.post("/api/posts", async (req, res, next) => {
   try {
-    const { username, content,likes } = req.body;
+    const { username, content, likes } = req.body;
 
     // Verifica que el usuario exista
     const user = await User.findOne({ username });
 
     if (!user) {
       return res.status(404).json({
-        error: 'Usuario no encontrado',
+        error: "Usuario no encontrado",
       });
     }
 
@@ -237,11 +238,10 @@ app.post("/api/posts", async (req, res, next) => {
     next(error);
   }
 });
-
-app.post("/api/posts/:id/like", async (req, res, next) => {
+/* app.post("/api/posts/:id/like", async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { userId } = req.body;
+    const { username } = req.body;
 
     // Encuentra el post por su ID
     const post = await Posts.findById(id);
@@ -253,14 +253,14 @@ app.post("/api/posts/:id/like", async (req, res, next) => {
     }
 
     // Verifica si el usuario ya ha dado like
-    const hasLiked = post.likes.includes(userId);
+    const hasLiked = post.likes.some((likeId) => likeId && likeId.toString() === username);
 
     if (hasLiked) {
       // Si ya ha dado like, quita el like
-      post.likes = post.likes.filter((likeId) => likeId.toString() !== userId);
+      post.likes = post.likes.filter((likeId) => likeId && likeId.toString() !== username);
     } else {
       // Si no ha dado like, agrega el like
-      post.likes.push(userId);
+      post.likes.push(username);
     }
 
     // Guarda la actualización
@@ -268,13 +268,13 @@ app.post("/api/posts/:id/like", async (req, res, next) => {
 
     res.json(updatedPost);
   } catch (error) {
+    console.error("Error al dar/quitar like al post", error);
     next(error);
   }
-});
+}); */
 
-
-  /* POSTs SIN MONGOOSE */
-  /* const producto = req.body;
+/* POSTs SIN MONGOOSE */
+/* const producto = req.body;
   const ids = productos.map((producto) => producto.id);
   const maxId = Math.max(...ids);
   const newProducto = {
@@ -296,7 +296,7 @@ app.post("/api/posts/:id/like", async (req, res, next) => {
 
   /* PUSH CON MONGOOSE */
 
- /*  const { content, userId, username } = req.body;
+/*  const { content, userId, username } = req.body;
 
   try {
     const user = await User.findById(userId);
@@ -328,7 +328,25 @@ app.post("/api/posts/:id/like", async (req, res, next) => {
   }
   
   
-}); */
+}); */ /* likes  */
+// Asegúrate de tener la ruta correcta al modelo Likes
+
+// ... otras rutas
+
+// Endpoint para manejar likes en un post específico
+
+// ... otras rutas
+
+// Manejo de errores
+app.use((error, req, res, next) => {
+  console.error(error);
+  console.log(error.name);
+  if (error.name == "CastError") {
+    res.status(400).end();
+  } else {
+    res.status(500).end();
+  }
+});
 
 /* Controladores */
 app.use("/api/users", usersRouter);
