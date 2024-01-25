@@ -6,7 +6,7 @@ const Post = require("../models/Products");
 /* para evitar el casterror  */
 const ObjectId = require('mongoose').Types.ObjectId;
 require("dotenv").config();
-const tokenENV = process.env.SECRET;
+const tokenENV = "MESSIesD10s";
 
 usersRouter.get("/", async (req, res, next) => {
   try {

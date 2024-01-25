@@ -1,7 +1,7 @@
 /* MONGOOSE */
 const mongoose = require("mongoose");
 require("dotenv").config();
-const linkConnect = process.env.MONGO_DB_URI; /* SE PUEDE HACER ASI Y PONER EL .ENV EN EL GIT IGNORE */
+const linkConnect = "mongodb://localhost:27017/ecommercellados"; /* SE PUEDE HACER ASI Y PONER EL .ENV EN EL GIT IGNORE */
 /*  O SE PUEDE HACER ASI CON EL LINK DE MONGO*/ /* en la ultima parte de la url crea la coleccion a la cual va a guardar los datos  */
 
 mongoose
