@@ -39,7 +39,7 @@ app.use(Sentry.Handlers.tracingHandler());
 app.use(express.json());
 app.use(middleware);
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT  || 3001;
 app.listen(PORT, () => {
   console.log(`listening on port: ${PORT}`);
 });
