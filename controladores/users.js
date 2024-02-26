@@ -104,7 +104,7 @@ usersRouter.post("/login", async (req, res, next) => {
       id: user._id,
     };
 
-    const token = jwt.sign(userForToken, tokenENV);
+    const token = jwt.sign(userForToken, process.env.SECRET);
 
     // Responde con el token y el nombre de usuario
     res.status(200).send({ token, username: user.username });
